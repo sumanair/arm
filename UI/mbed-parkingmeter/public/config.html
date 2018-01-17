@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARM - IBM Parking Meter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="./css/Header-Blue.css">
+    <link rel="stylesheet" href="./css/Navigation-Clean1.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+   
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #d3d3d3;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header"><a class="navbar-brand navbar-link" href="#">ARM-IBM Parking Meter - Configuration</a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navcol-1">
+        <ul class="nav navbar-nav">
+            <li><a href="#backend" data-toggle="collapse" data-pdsa-dropdown-val=1 id="makelink">Backend</a></li>
+            <li><a href="#meter" data-toggle="collapse" data-pdsa-dropdown-val=0 id="schemaslink">Meter</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">Meter 1</a>
+  <a href="#">Meter 2</a>
+  <a href="#">Meter 3</a>
+  <a href="#">Contact</a>
+</div>
+
+<!-- Use any element to open the sidenav -->
+<a  href="#"><i class="fa fa-bars fa-3x" aria-hidden="true"onclick="openNav()"></i>
+&nbsp; Meters</a>
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="main">
+    <div id="meter" class="collapse">
+    
+    <div class="container hero ">
+
+
+<div class="panel panel-primary">
+<div class="panel-heading" color="CornFlowerBlue" >
+ <h3 class="panel-title" align="text-center">Parking Meter Definition</h3>
+</div>
+
+<div class="panel-body">
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Meter Id</label>
+              <input class="form-control"  required="true" type="text" value="" id="meterid">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>  
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">mbed Device Id</label>
+              <input class="form-control"  required="true" type="text" value="" id="deviceid">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>  
+        <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Meter URL</label>
+              <input class="form-control"  required="true" type="text" value="" id="meterurl">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+     <div class="row">
+     <h4> <p class="bg-info" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Rate Definition</p>  </h4>
+     </div>
+    <div class="row">
+        <div class="col-md-1"> 
+        </div>
+
+          <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label"> Min. Cost</label>
+              <input class="form-control"  required="true" type="text" value="" id="minusagecost">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label"> Min. Duration</label>
+              <input class="form-control"  required="true" type="text" value="" id="minusageduration">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+          <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label"> OT. Cost</label>
+              <input class="form-control"  required="true" type="text" value="" id="otusagecost">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label"> OT. Duration</label>
+              <input class="form-control"  required="true" type="text" value="" id="otusageduration">
+          </div>
+        </div>
+      </div>
+    <div class="row">
+     <h4> <p class="bg-info" >&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Location Details</p>  </h4>
+     </div>
+     <div class="row">
+        <div class="col-md-1"> 
+        </div>
+
+          <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label"> Latitude</label>
+              <input class="form-control"  required="true" type="text" value="" id="latitude">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label"> longitude</label>
+              <input class="form-control"  required="true" type="text" value="" id="longitude">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+          <div class="col-md-5">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label"> Address</label>
+              <input class="form-control"  required="true" type="text" value="" id="address">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+      </div>
+
+  </div>
+  </div>
+
+  <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-primary active" id="newschema">New Meter Definition</button>
+        </div>
+         <div class="col-md-2">
+            <button type="button" class="btn btn-primary active" id="saveschema">Save Meter Definition</button>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-primary active" id="reloadschema">Reload Meter Definition</button>
+        </div>
+  </div>
+
+</div>
+</div>
+<div id="backend" class="collapse">
+    
+    <div class="container hero ">
+
+
+<div class="panel panel-primary">
+<div class="panel-heading" color="CornFlowerBlue" >
+ <h3 class="panel-title" align="text-center">Backend Definition</h3>
+</div>
+
+<div class="panel-body">
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-3">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Peer address</label>
+              <input class="form-control"  required="true" type="text" value="" id="peeraddress">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>  
+        <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">User Id</label>
+              <input class="form-control"  required="true" type="text" value="" id="userid">
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+     
+    <div class="row">
+        <div class="col-md-1"> 
+        </div>
+
+          <div class="col-md-8">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label"> Chaincode Id</label>
+              <input class="form-control"  required="true" type="text" value="" id="chaincodeid">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"> 
+        </div>
+
+          <div class="col-md-8">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Node Flow URL</label>
+              <input class="form-control"  required="true" type="text" value="" id="nodeflow">
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+
+  <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-primary active" id="newschema">New Meter Definition</button>
+        </div>
+         <div class="col-md-2">
+            <button type="button" class="btn btn-primary active" id="saveschema">Save Meter Definition</button>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-primary active" id="reloadschema">Reload Meter Definition</button>
+        </div>
+  </div>
+
+</div>
+</div>
+<!-- Acordions for the product stages-->
+<div id="make" class="collapse">
+  <div class="container hero ">
+   <div class="panel-group" id="productaccordion">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h4 class="panel-title" >
+        <a data-toggle="collapse" id="createSubAssembly" data-parent="#accordion"  href="#collapsesubassembly">
+        Create Component</a>
+      </h4>
+    </div>
+    <div id="collapsesubassembly" class="panel-collapse collapse in">
+     <div class="row">
+      <div class="col-md-1"> </div>
+       <div class="col-md-2">
+          <div class="form-group">
+              <label for="Select"> Schema Id</label>
+              <select id="assemblyschemaid" class="form-control">
+                <option selected>ID 1</option>
+                <option >ID 2</option>
+              </select>
+            </div>
+        </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">SubAssembly Code</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="assemblyprodcode">
+          </div>
+      </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">SubAssembly Description</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="assemblyproddesc">
+          </div>
+      </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Count</label>
+              <input class="form-control" required="true" type="text" value="1" id="assemblycount">
+          </div>
+        </div>
+    </div>
+         <!------ ------------------>
+     <div class="row">
+        <div class="col-md-1"> </div>
+         <div class="col-md-6">
+           <div class="form-group">
+              <label for="assemblyschemadefn">Schema:</label>
+              <textarea class="form-control" rows="10" value="Specify schema is json format" id="assemblyschemadefn"></textarea>
+            </div>
+         </div>
+         <div class="col-md-1"> </div>
+         <div class="col-md-3">
+           <div class="form-group">
+              <label for="assemblyprodids">Assembly IDs:</label>
+              <textarea class="form-control" disabled rows="10" value="" id="assemblyprodids"></textarea>
+            </div>
+         </div>
+    </div>
+        <!------ ------------------>
+      <div class="row">
+      <div class="col-md-1"> </div>
+       <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Batch ID</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="assemblybatchid">
+          </div>
+        </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Order ID</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="assemblyoderid">
+          </div>
+      </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Ship To:</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="assemblydestination">
+          </div>
+      </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Geo:</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="assemblydestinationlatlong">
+          </div>
+      </div>
+    </div>
+    <!------ ------------------>
+     <div class="row">
+      <div class="col-md-2"> </div>
+       <div class="col-md-3">
+          <button class="btn btn-info active" type="button" id="makeassembly">Make SubAssembly & Gen. Order </button>
+        </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-3">
+          <button class="btn btn-info active" type="button" id="shipassembly">Ship to Factory</button>
+      </div>
+    </div>
+    </br>
+    <!------ ------------------>
+      </div> <!-- End of Panel collapsesubassembly -->
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" id="createProduct" data-parent="#accordion"  href="#collapseproduct">
+        Create Product</a>
+      </h4>
+    </div>
+    <div id="collapseproduct" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row">
+      <div class="col-md-1"> </div>
+       <div class="col-md-2">
+          <div class="form-group">
+              <label for="Select"> Schema Id</label>
+              <select id="productschemaid" class="form-control">
+                <option selected>ID 1</option>
+                <option >ID 2</option>
+              </select>
+            </div>
+        </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Product Code</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="productprodcode">
+          </div>
+      </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Product Description</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="productproddesc">
+          </div>
+      </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Count</label>
+              <input class="form-control" required="true" type="text" value="1" id="productcount">
+          </div>
+        </div>
+    </div>
+         <!------ ------------------>
+     <div class="row">
+        <div class="col-md-1"> </div>
+         <div class="col-md-6">
+           <div class="form-group">
+              <label for="productschemadefn">Schema:</label>
+              <textarea class="form-control" rows="10" value="Specify schema is json format" id="productschemadefn"></textarea>
+            </div>
+         </div>
+         <div class="col-md-1"> </div>
+         <div class="col-md-3">
+           <div class="form-group">
+              <label for="productprodids">Product IDs:</label>
+              <textarea class="form-control" disabled rows="10" value="" id="productprodids"></textarea>
+            </div>
+         </div>
+    </div>
+        <!------ ------------------>
+      <div class="row">
+      <div class="col-md-1"> </div>
+       <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Batch ID</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="productbatchid">
+          </div>
+        </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Order ID</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="productoderid">
+          </div>
+      </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Ship To:</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="productdestination">
+          </div>
+      </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Geo:</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="productdestinationlatlong">
+          </div>
+      </div>
+    </div>
+    <!------ ------------------>
+     <div class="row">
+      <div class="col-md-2"> </div>
+       <div class="col-md-3">
+          <button class="btn btn-info active" type="button" id="makeproduct">Make Product & Gen. Order </button>
+        </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-3">
+          <button class="btn btn-info active" type="button" id="shipproduct">Ship to Warehouse</button>
+      </div>
+    </div>
+    </br>
+    <!------ ------------------>
+      </div> 
+      </div>
+    </div>
+  </div><!-- End of Panel collapseproduct -->
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" id="packagingtitle" href="#collapsepackage" onclick="populatePackageDropdowns()">
+        Ship to Dealer</a>
+      </h4>
+    </div>
+    <div id="collapsepackage" class="panel-collapse collapse">
+      <div class="panel-body">
+        <!------ ------------------>
+        <div class="row">
+          <div class="col-md-1"> </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label for="Select"> Product Batch</label>
+              <select id="packagebatchid" class="form-control">
+                <option selected>ID 1</option>
+                <option >ID 2</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-1"> </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label for="Select"> Seller</label>
+              <select id="packagesellername" class="form-control">
+                <option selected>ID 1</option>
+                <option >ID 2</option>
+              </select>
+            </div>
+        </div>
+          <div class="col-md-1"> </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label for="Select"> Seller Order</label>
+              <select id="packagesellerorderid" class="form-control">
+                <option selected>ID 1</option>
+                <option >ID 2</option>
+              </select>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-md-2"> </div>
+      <div class="col-md-2">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Ship To:</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="packagedestination">
+          </div>
+      </div>
+      <div class="col-md-1"> </div>
+      <div class="col-md-1">
+          <div class="form-group row">
+            <label for="example-text-input"  class="col-2 col-form-label">Geo:</label>
+              <input class="form-control" disabled required="true" type="text" value="" id="packagedestinationlatlong">
+          </div>
+      </div>
+      <input type="text" hidden id="packagesellerid">
+      </div>
+        <!------ ------------------>
+      <div class="row">
+        <div class="col-md-4"> </div>
+        <div class="col-md-3">
+          <button class="btn btn-info active" type="button" id="shiptoseller">Ship Finished product to Dealer </button>
+        </div> 
+      </div>
+      </div>
+        <!------ ------------------>
+      </div>
+    </div>
+  </div> <!-- End of Panel collapsepackage -->
+</div> 
+  </div>
+</div>
+<!-- quick view of supplies & products-->
+<div id="assets" class="collapse">
+  <div class="container">
+    <ul class="nav nav-tabs">
+    
+    <li class="active"><a data-toggle="tab" href="#productspane">Products</a></li>
+    <li><a data-toggle="tab" href="#orderspane">Orders</a></li>
+    <li><a data-toggle="tab" href="#suppliespane">Supplies</a></li>
+    
+    </ul>
+
+    <div class="tab-content">
+      <div id="suppliespane" class="tab-pane fade in active">
+        <h3>Supplies</h3>
+        <div class="row">
+            <div class="col-md-1"> </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive" id="tbl-supplier-stock">
+                            <table class="table" id = "suppliesList" >
+                                <thead>
+                                    <tr>
+                                        <th>Supply ID</th>
+                                        <th>Order# </th>
+                                        <th>Description </th>
+                                        <th>Type </th>
+                                        <th>Year </th>
+                                        <th>BatchId </th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+    <div id="productspane" class="tab-pane fade">
+        <h3>Products</h3>
+        <div class="row">
+            <div class="col-md-1"> </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive" id="tbl-supplier-stock">
+                            <table class="table" id = "productsList" >
+                                <thead>
+                                    <tr>
+                                        <th>Product ID</th>
+                                        <th>Order# </th>
+                                        <th>Type </th>
+                                        <th>Description </th>
+                                        <th>Batch ID </th>
+                                        <th>Status </th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+      </div>
+    <div id="orderspane" class="tab-pane fade">
+        <h3>Orders</h3>
+        <div class="row">
+            <div class="col-md-1"> </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive" id="tbl-supplier-stock">
+                            <table class="table" id = "ordersList" >
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Issuer</th>
+                                        <th>Description </th>
+                                        <th>Status </th>
+                                        <th>Track </th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="maker.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9tc97bO2N5pWY1t2f1S8opRAIH6BsNrI&callback=initMap">
+    </script>
+
+</body>
+
+</html>
