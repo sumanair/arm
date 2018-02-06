@@ -16,7 +16,7 @@ var ARMchaincodeUser = "user_type1_0";
 
 
 //Array of parking meters. Currently hardcoded for PKM-001 thru PKM-010
-var arr = [ "PKM-001", "PKM-002", "PKM-003", "PKM-004", "PKM-005", "PKM-006", "PKM-007", "PKM-008", "PKM-009", "PKM-010","PKM-017", "PKM-018", "PKM-021", "PKM-022", "PKM-023", "PKM-024", "PKM-028","PKM-031"];
+var arr = [ "PKM-001", "PKM-002", "PKM-003", "PKM-004", "PKM-005", "PKM-006", "PKM-007", "PKM-008", "PKM-009", "PKM-010","PKM-017", "PKM-018", "PKM-021", "PKM-022", "PKM-023", "PKM-024", "PKM-028","PKM-029","PKM-031"];
 var nodes = '{ "noderoutes" : [' +
 '{ "meterid":"PKM-001" , "link":"https://my-watson-nodered-app.mybluemix.net/" },' +
 '{ "meterid":"PKM-002" , "link":"https://my-watson-nodered-app.mybluemix.net/" },' +
@@ -35,6 +35,7 @@ var nodes = '{ "noderoutes" : [' +
 '{ "meterid":"PKM-023" , "link":"https://my-nodered-watson-app.mybluemix.net/" },' +
 '{ "meterid":"PKM-024" , "link":"https://my-nodered-watson-app.mybluemix.net/" },' +
 '{ "meterid":"PKM-028" , "link":"https://my-nodered-watson-app.mybluemix.net/" },' +
+'{ "meterid":"PKM-029" , "link":"https://my-nodered-watson-app.mybluemix.net/red" },' +
 '{ "meterid":"PKM-031" , "link":"https://my-watson-nodered-app.mybluemix.net/" }]}';
 
 
@@ -50,15 +51,15 @@ jQuery(window).bind('orientationchange', function(e) {
     break;
     default: {}
   }
-  
+
 });
 ///////////////// Blockchain calls //////////////////////
 //  Get the device's rate and duration
 function getDeviceRates() {
   var chaincodeID=ARMchaincodeID;
   var fabricPeer = ARMchaincodePath;
-  var jsonString = '{ "jsonrpc": "2.0","method": "query","params": {"type": 1,"chaincodeID": '+ 
-  '{"name": "'+ chaincodeID+ '"}, "ctorMsg": { "function": "readDevice", '+ 
+  var jsonString = '{ "jsonrpc": "2.0","method": "query","params": {"type": 1,"chaincodeID": '+
+  '{"name": "'+ chaincodeID+ '"}, "ctorMsg": { "function": "readDevice", '+
   '"args": ["{\\\"deviceid\\\": \\\"'+sMeterid+'\\\"}"]},"secureContext": "user_type1_0"},'+
   '"id": 0 }';
    console.log(jsonString);
@@ -105,8 +106,8 @@ function createUsageRecord() {
   var chaincodeID=ARMchaincodeID;
   var fabricPeer = ARMchaincodePath;
 
-   var jsonString = '{ "jsonrpc": "2.0","method": "invoke","params": {"type": 1,"chaincodeID": '+ 
-  '{"name": "'+ chaincodeID+ '"}, "ctorMsg": { "function": "createUsage", '+ 
+   var jsonString = '{ "jsonrpc": "2.0","method": "invoke","params": {"type": 1,"chaincodeID": '+
+  '{"name": "'+ chaincodeID+ '"}, "ctorMsg": { "function": "createUsage", '+
   '"args": ["{\\\"deviceid\\\":\\\"'+sMeterid+'\\\", \\\"starttime\\\":\\\"'+getDateTime()+'\\\", \\\"duration\\\":'+ clicks + '}"]},'+
   '"secureContext": "user_type1_0"},'+
   '"id": 0 }';
@@ -125,7 +126,7 @@ function createUsageRecord() {
       {
         console.log(errorThrown);
       }
-      
+
   });
 
  }
@@ -135,7 +136,7 @@ function makeMeterAvailable() {
   var chaincodeID=ARMchaincodeID;
   var fabricPeer = ARMchaincodePath;
 
-  var jsonString = '{ "jsonrpc": "2.0","method": "invoke","params": {"type": 1,"chaincodeID": '+ 
+  var jsonString = '{ "jsonrpc": "2.0","method": "invoke","params": {"type": 1,"chaincodeID": '+
   '{"name": "'+ chaincodeID+ '"}, "ctorMsg": { "function": "updateDeviceAsAvailable", '+
   '"args": ["{\\\"deviceid\\\":\\\"'+sMeterid+'\\\", \\\"available\\\":true}"]},"secureContext": "user_type1_0"},'+
   '"id": 0 }';
@@ -149,7 +150,7 @@ function makeMeterAvailable() {
       {
         console.log(JSON.stringify(data));
         setTimeout(function() {
-        location.reload(); }, 10000); 
+        location.reload(); }, 10000);
       },
       error: function (jqXHR, textStatus, errorThrown)
       {
@@ -179,7 +180,7 @@ function startCounter() {
       {
         console.log(errorThrown);
       }
-      
+
   });
  }
 //Set the parking meter free : toggle dollar sign
@@ -201,7 +202,7 @@ function startCounter() {
 
       console.log(errorThrown);
       }
-      
+
   });
 }
 //Set meter back to paid: toggle dollar sign
@@ -222,14 +223,14 @@ function setPaidMeter() {
       console.log(errorThrown);
 
       }
-      
+
   });
- 
+
  }
 ///////////////////Button click events ////////////
 // Add time
 $(document).on("click", "#add", function(){
-     clicks=clicks+10; 
+     clicks=clicks+10;
       $('#timer').html(pad(clicks,2));
       $( "#timer" ).css('font-size', '40px');
        $( "#timer" ).css('color', '#66a3ff');
@@ -243,15 +244,15 @@ $(document).on("click", "#add", function(){
       else {
         amount=(clicks* ratePerSec).toFixed(2);
       }
-      
+
       $('#amount').html("$"+amount);
       $( "#amount" ).css('color', '#339966');
-      
+
 });
 //remove time
 $(document).on("click", "#subtract", function(){
       if (clicks >=10 ) {
-        clicks=clicks-10; 
+        clicks=clicks-10;
         $('#timer').html(pad(clicks,2));
         $( "#timer" ).css('font-size', '40px');
          $( "#timer" ).css('color', '#66a3ff');
@@ -266,7 +267,7 @@ $(document).on("click", "#subtract", function(){
         $( "#timer" ).css('color', '#66a3ff');
 
       }
-     
+
 });
 //Click refresh button
 $(document).on("click touchstart", "#refbtn", function(){
@@ -303,7 +304,7 @@ $(document).on("click", "#submit", function(){
       $(this).css('background-color','lightgrey');
       //alert('before make meter available');
     }
-      
+
 });
 // click credit card
 ////////////// IBM Payment integration /////////////
@@ -319,7 +320,7 @@ $(document).on("click", "#paylink", function(){
 //////////////////////Others////////////////////////
 //Timestamp in UTC
 function getDateTime() {
-  var currentdate = new Date(); 
+  var currentdate = new Date();
   todaysDate = currentdate.getUTCDate()<10? "0"+currentdate.getUTCDate():currentdate.getUTCDate();
   todaysMonth = (currentdate.getUTCMonth()+1)<10? "0"+(currentdate.getUTCMonth()+1):(currentdate.getUTCMonth()+1);
   thisHour = currentdate.getUTCHours() <10? "0"+currentdate.getUTCHours():currentdate.getUTCHours();
@@ -331,7 +332,7 @@ function getDateTime() {
   //alert (datetime);
   return datetime;
 }
-//Computing the timer 
+//Computing the timer
 function pad(num, size) {
     var s = num+"";
     if (s>=60) {
@@ -359,9 +360,9 @@ function pad(num, size) {
 
 //timer countdown functions
  function changeColor() {
-      nIntervId = setInterval(flashText, 1000);     
+      nIntervId = setInterval(flashText, 1000);
 }
- 
+
 function flashText() {
   //$( "#timer" ).css('color',  ("red" ? "blue" : "red"));
   if (clicks==10)
@@ -375,7 +376,7 @@ function flashText() {
   countdown++;
     clicks--;
   $('#timer').html(pad(clicks,2));
-  if (clicks==0) 
+  if (clicks==0)
     {
         $('#timer').html("Expired!");
         $( "#timer" ).css('color', 'red');
@@ -387,7 +388,7 @@ function flashText() {
     }
 }
 
-// Page load 
+// Page load
 
 window.onload = function() {
   showLoc();
@@ -418,7 +419,7 @@ function showLoc() {
 //       $( "#meterid" ).css('color', '#FF0000');
 //       $( "#meterid" ).text( sWelcome);
        $("#submit").attr("disabled", "disabled");
-       nope();   
+       nope();
   }
 
   else {
@@ -432,7 +433,7 @@ function showLoc() {
        getDeviceRates(); // Temporarily commenting expensive rest calls for testing
        //$("#meterid").css("color", blue);
   }
-     
+
 }
 
 function nope(){
@@ -473,7 +474,7 @@ function getPaymentLink() {
 }
 
 function makePayment() {
-  var amtString = amount.toString(); 
+  var amtString = amount.toString();
   var pymtData = "{money:"+amtString+"}";
   console.log(pymtData);
   /*
@@ -501,7 +502,7 @@ function makePayment() {
       }
   });
 }
- 
+
 function getnodeFlowLink() {
   var obj = JSON.parse(nodes);
   for (i = 0; i < obj.noderoutes.length; i++) {
@@ -511,4 +512,3 @@ function getnodeFlowLink() {
     }
   }
 }
-
