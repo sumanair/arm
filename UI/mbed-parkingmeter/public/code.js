@@ -10,13 +10,13 @@ var amount;
 var setFree =true;
 var sRate ='e.g. $0.25 / 10 sec' ;
 var thisMeterid = "";
-var ARMchaincodeID = "17bf813717b619b7750ee877c0183d8c3087ebd806b8ac796e8bce9198b4a1c90b77fa1459f844c9771f383c3cda6a902cfff3997ec499de7a082dff2c282d2b";
-var ARMchaincodePath = "https://4a2d6159278e4d2c8b576dfd33680ebf-vp0.us.blockchain.ibm.com:5004/chaincode";
-var ARMchaincodeUser = "user_type1_0";
+var ARMchaincodeID = "89e11d168c3ebbf2f91519d95244779e07acd4f50ae0308e92afad64974d85372aa4a1353b5fe6e402a2d3c582de5c6ddfded85bbd3e596fb2f63c6000c0db86";
+var ARMchaincodePath = "http://169.55.10.2:7050/chaincode";
+var ARMchaincodeUser = "WebAppAdmin";
 
 
 //Array of parking meters. Currently hardcoded for PKM-001 thru PKM-010
-var arr = [ "PKM-001", "PKM-002", "PKM-003", "PKM-004", "PKM-005", "PKM-006", "PKM-007", "PKM-008", "PKM-009", "PKM-010","PKM-017", "PKM-018", "PKM-021", "PKM-022", "PKM-023", "PKM-024", "PKM-028","PKM-029","PKM-031"];
+var arr = [ "PKM-001", "PKM-002", "PKM-003", "PKM-004", "PKM-005", "PKM-006", "PKM-007", "PKM-008", "PKM-009", "PKM-010","PKM-017", "PKM-018", "PKM-021", "PKM-022", "PKM-023", "PKM-024", "PKM-028","PKM-029","PKM-031","PKM-040"];
 var nodes = '{ "noderoutes" : [' +
 '{ "meterid":"PKM-001" , "link":"https://my-watson-nodered-app.mybluemix.net/" },' +
 '{ "meterid":"PKM-002" , "link":"https://my-watson-nodered-app.mybluemix.net/" },' +
@@ -35,8 +35,9 @@ var nodes = '{ "noderoutes" : [' +
 '{ "meterid":"PKM-023" , "link":"https://my-nodered-watson-app.mybluemix.net/" },' +
 '{ "meterid":"PKM-024" , "link":"https://my-nodered-watson-app.mybluemix.net/" },' +
 '{ "meterid":"PKM-028" , "link":"https://my-nodered-watson-app.mybluemix.net/" },' +
-'{ "meterid":"PKM-029" , "link":"https://my-nodered-watson-app.mybluemix.net/red" },' +
-'{ "meterid":"PKM-031" , "link":"https://my-watson-nodered-app.mybluemix.net/" }]}';
+'{ "meterid":"PKM-029" , "link":"https://my-nodered-watson-app.mybluemix.net/" },' +
+'{ "meterid":"PKM-031" , "link":"https://my-nodered-watson-app.mybluemix.net/" },' +
+'{ "meterid":"PKM-040" , "link":"https://my-watson-nodered-app.mybluemix.net/" }]}';
 
 
 // Change title on portrait / landscape views
@@ -53,6 +54,21 @@ jQuery(window).bind('orientationchange', function(e) {
   }
 
 });
+$( document ).ready(function() {
+  if (!localStorage.getItem("reload")) {
+    /* set reload locally and then reload the page */
+    localStorage.setItem("reload", "true");
+    var sLocation = location.href.replace("https", "http");
+    window.location = sLocation;
+    location.reload();
+  }
+  /* after reload clear the localStorage */
+  else {
+      localStorage.removeItem("reload");
+      // localStorage.clear(); // an option
+  }
+    console.log( location.href );
+});
 ///////////////// Blockchain calls //////////////////////
 //  Get the device's rate and duration
 function getDeviceRates() {
@@ -60,7 +76,7 @@ function getDeviceRates() {
   var fabricPeer = ARMchaincodePath;
   var jsonString = '{ "jsonrpc": "2.0","method": "query","params": {"type": 1,"chaincodeID": '+
   '{"name": "'+ chaincodeID+ '"}, "ctorMsg": { "function": "readDevice", '+
-  '"args": ["{\\\"deviceid\\\": \\\"'+sMeterid+'\\\"}"]},"secureContext": "user_type1_0"},'+
+  '"args": ["{\\\"deviceid\\\": \\\"'+sMeterid+'\\\"}"]},"secureContext": "WebAppAdmin"},'+
   '"id": 0 }';
    console.log(jsonString);
    $.ajax({
@@ -109,7 +125,7 @@ function createUsageRecord() {
    var jsonString = '{ "jsonrpc": "2.0","method": "invoke","params": {"type": 1,"chaincodeID": '+
   '{"name": "'+ chaincodeID+ '"}, "ctorMsg": { "function": "createUsage", '+
   '"args": ["{\\\"deviceid\\\":\\\"'+sMeterid+'\\\", \\\"starttime\\\":\\\"'+getDateTime()+'\\\", \\\"duration\\\":'+ clicks + '}"]},'+
-  '"secureContext": "user_type1_0"},'+
+  '"secureContext": "WebAppAdmin"},'+
   '"id": 0 }';
    console.log(jsonString);
     //alert(jsonString);
@@ -138,7 +154,7 @@ function makeMeterAvailable() {
 
   var jsonString = '{ "jsonrpc": "2.0","method": "invoke","params": {"type": 1,"chaincodeID": '+
   '{"name": "'+ chaincodeID+ '"}, "ctorMsg": { "function": "updateDeviceAsAvailable", '+
-  '"args": ["{\\\"deviceid\\\":\\\"'+sMeterid+'\\\", \\\"available\\\":true}"]},"secureContext": "user_type1_0"},'+
+  '"args": ["{\\\"deviceid\\\":\\\"'+sMeterid+'\\\", \\\"available\\\":true}"]},"secureContext": "WebAppAdmin"},'+
   '"id": 0 }';
    console.log(jsonString);
    $.ajax({

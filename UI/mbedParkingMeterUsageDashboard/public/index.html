@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/style.css">
  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+ <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+ <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+ <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript">
     google.charts.load('current', {'packages': ['table', 'map', 'corechart']});
@@ -32,7 +34,26 @@
           document.getElementById('chart_div'));
       chart.draw(ticketsData, {'isStacked': true, 'legend': 'bottom',
           'vAxis': {'title': 'Number of tickets'}});
+  
+  $( document ).ready(function() {
+    alert("Here");
+  if (!localStorage.getItem("reload")) {
+    /* set reload locally and then reload the page */
+    alert("Here1");
+    localStorage.setItem("reload", "true");
+    var sLocation = location.href.replace("https", "http");
+    window.location = sLocation;
+    location.reload();
+    alert(window.location);
+  }
 
+  /* after reload clear the localStorage */
+  else {
+      localStorage.removeItem("reload");
+      // localStorage.clear(); // an option
+  }
+    console.log( location.href );
+});
     function draw(response) {
       if (response.isError()) {
         alert('Error in query');
@@ -47,16 +68,18 @@
       }, 5000);
       
       //alert('after getDevices');
-      
+
+ 
+
        
       function getDeviceUsage(sMeterid) {
       //var sMeterid='PKM-005';
-        var chaincodeID="17bf813717b619b7750ee877c0183d8c3087ebd806b8ac796e8bce9198b4a1c90b77fa1459f844c9771f383c3cda6a902cfff3997ec499de7a082dff2c282d2b";
+        var chaincodeID="89e11d168c3ebbf2f91519d95244779e07acd4f50ae0308e92afad64974d85372aa4a1353b5fe6e402a2d3c582de5c6ddfded85bbd3e596fb2f63c6000c0db86";
 
-        var fabricPeer = "https://4a2d6159278e4d2c8b576dfd33680ebf-vp0.us.blockchain.ibm.com:5004/chaincode";
+        var fabricPeer = "http://169.55.10.2:7050/chaincode";
         var jsonString = '{ "jsonrpc": "2.0","method": "query","params": {"type": 1,"chaincodeID": '+ 
         '{"name": "'+ chaincodeID+ '"}, "ctorMsg": { "function": "readUsageHistory", '+ 
-        '"args": ["{\\\"deviceid\\\": \\\"'+sMeterid+'\\\"}"]},"secureContext": "user_type1_0"},'+
+        '"args": ["{\\\"deviceid\\\": \\\"'+sMeterid+'\\\"}"]},"secureContext": "WebAppAdmin"},'+
         '"id": 0 }';
         //alert(jsonString);
 
@@ -158,12 +181,12 @@
       chart.draw(data, {width: 400, height: 240});
 */
       function getDevices() {
-        var chaincodeID="17bf813717b619b7750ee877c0183d8c3087ebd806b8ac796e8bce9198b4a1c90b77fa1459f844c9771f383c3cda6a902cfff3997ec499de7a082dff2c282d2b";
+        var chaincodeID="89e11d168c3ebbf2f91519d95244779e07acd4f50ae0308e92afad64974d85372aa4a1353b5fe6e402a2d3c582de5c6ddfded85bbd3e596fb2f63c6000c0db86";
 
-        var fabricPeer = "https://4a2d6159278e4d2c8b576dfd33680ebf-vp0.us.blockchain.ibm.com:5004/chaincode";
+        var fabricPeer = "http://169.55.10.2:7050/chaincode";
         var jsonString = '{ "jsonrpc": "2.0","method": "query","params": {"type": 1,"chaincodeID": '+ 
         '{"name": "'+ chaincodeID+ '"}, "ctorMsg": { "function": "readDeviceList", '+ 
-        '"args": []},"secureContext": "user_type1_0"},'+
+        '"args": []},"secureContext": "WebAppAdmin"},'+
         '"id": 0 }';
         //alert(jsonString);
         var sRegRate = "/";
@@ -210,7 +233,6 @@
             dataTable.addColumn('number', 'Long');
             dataTable.addColumn('number', 'Usage');
             dataTable.addRows(jsonData.devices.length);
-      
             for (i=0; i<jsonData.devices.length; i++)
             {
               var objDev = jsonData.devices[i];
@@ -229,18 +251,10 @@
 
             }
             //Hardcoding usage percentages now, just because the chaincode doesn't provide the summary
-            
             dataTable.setCell(0, 7, 30);
-            dataTable.setCell(1, 7, 2);
-            dataTable.setCell(2, 7, 6);
-            dataTable.setCell(3, 7, 6);
-            dataTable.setCell(4, 7, 8);
-            dataTable.setCell(5, 7, 5);
-            dataTable.setCell(6, 7, 15);
-            dataTable.setCell(7, 7, 7);
-            dataTable.setCell(8, 7, 7);
-            dataTable.setCell(9, 7, 4);
-            dataTable.setCell(10, 7, 10);
+            dataTable.setCell(1, 7, 25);
+            dataTable.setCell(2, 7, 17);
+            dataTable.setCell(3, 7, 23);
             
             dataTable.sort({column: 0, desc: false}); 
             var usageView = new google.visualization.DataView(dataTable);
